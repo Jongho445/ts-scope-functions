@@ -1,4 +1,4 @@
-class ScopeMonad<T>{
+export default class ScopeMonad<T>{
 
   public constructor(
     private readonly elem: T
@@ -40,7 +40,15 @@ class ScopeMonad<T>{
     }
   }
 
-  public orElseThrow_<R>(err: Error): ScopeMonad<T | R> {
+  public orElseApply_(fx: () => void): ScopeMonad<T> {
+    if (this.elem === null || this.elem === undefined) {
+      fx();
+    }
+
+    return this;
+  }
+
+  public orElseThrow_(err: Error): ScopeMonad<T> {
     if (this.elem === null || this.elem === undefined) {
       throw err;
     } else {
@@ -64,15 +72,19 @@ class ScopeMonad<T>{
     }
   }
 
-  public orElseThrow<R>(err: Error): T | R {
+  public orElseApply(fx: () => void): T {
+    if (this.elem === null || this.elem === undefined) {
+      fx();
+    }
+
+    return this.elem;
+  }
+
+  public orElseThrow(err: Error): T {
     if (this.elem === null || this.elem === undefined) {
       throw err;
     } else {
       return this.elem;
     }
   }
-}
-
-export function run<T>(elem: T): ScopeMonad<T> {
-  return new ScopeMonad<T>(elem)
 }
