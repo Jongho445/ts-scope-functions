@@ -1,14 +1,16 @@
-import { run, runWith } from "./ScopeFunctions";
+import { run } from "./ScopeFunctions";
 
-const getUpper1 = (str: string) => run(() => str)
-  .let(str => str.toUpperCase())
-  .let(str => str.trim())
-  .get();
+const str1 = run(null)
+  .orElseGet("is not exist")
 
-const getUpper2 = (str: string | undefined = undefined) => runWith(str)
-  .let(str => str?.toUpperCase())
-  .let(str => str?.trim())
-  .orElseGet("is not exist").get();
+const str2 = run("hello").also_(it => {
+  console.log(`it is ${it}`);
+}).orElseGet("is not exist");
 
-console.log(getUpper1("  haha"));
-console.log(getUpper2());
+const upper = run("hello").let(it => {
+  return it.toUpperCase()
+});
+
+console.log(str1);
+console.log(str2);
+console.log(upper);
