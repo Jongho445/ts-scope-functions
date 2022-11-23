@@ -15,6 +15,30 @@ class ScopeMonad<T> {
 
     return this;
   }
+
+  public orElseGet<R>(elem: R): ScopeMonad<T | R> {
+    if (this.elem === null || this.elem === undefined) {
+      return new ScopeMonad(elem);
+    } else {
+      return this;
+    }
+  }
+
+  public orElseRun<R>(fx: () => R): ScopeMonad<T | R> {
+    if (this.elem === null || this.elem === undefined) {
+      return new ScopeMonad(fx());
+    } else {
+      return this;
+    }
+  }
+
+  public orElseThrow<R>(err: Error): ScopeMonad<T | R> {
+    if (this.elem === null || this.elem === undefined) {
+      throw err;
+    } else {
+      return this;
+    }
+  }
 }
 
 export function runWith<T>(elem: T): ScopeMonad<T> {
