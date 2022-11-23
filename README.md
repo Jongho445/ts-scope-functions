@@ -1,3 +1,3 @@
-# ts-scope-function
+# ts-scope-functions
 
-typescript에서 kotlin의 scope functions를 사용할 수 있습니다.
+typescript에서 kotlin의 scope functions를 사용하기 위한 라이브러리입니다.
